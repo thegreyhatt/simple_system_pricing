@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <title>System Pricing</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" type="text/css" href="bower_components/seiyria-bootstrap-slider/dist/css/bootstrap-slider.min.css"> -->
+
+    <style>
+        .navbar{
+            margin-bottom:0;
+            border-radius:0;
+        }
+        #ex1Slider .slider-selection {
+            background: #BABABA;
+        }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-default">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="index.html">System Pricing</a>
+        </div>
+     
+      </div>
+    </nav>
+
+    <div class="container" style="margin-top: 15px;">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Simple Price Calculator</h3>
+                    </div>        
+                    <div class="panel-body">
+                        <label>Monthly Rate:</label>
+                        <input type="number" id="monthly_rate" class="form-control">
+                        <label>Number of Work Days: <small class="text-muted" >Standard Work Days</small> </label>
+                        <input type="number" id="number_of_days" class="form-control">
+                        <label>Incentive Percentage: <small class="text-muted" >Value would be 1.20 - 1.85</small> </label>
+                        <input type="number" id="incentive_percentage" class="form-control">
+                        <hr>
+                        <h3>Urgent</h3>
+                        <label>Number of Days to Submit:</label>
+                        <input type="number" id="days_to_submit" class="form-control">
+                        <hr>
+                        <h1>Cost: <span id="txtCost"></span> </h1>
+                    </div>
+                    <div class="panel-footer">
+                        <button class="btn btn-success pull-right" id="btnCalculate" >Calculate</button>
+                        <span class="text-success" id="lblUrgentPrice" ></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Bootstrap JS -->
+    <div style="height:400px"></div>
+    <script src="js/jquery.js" ></script>
+    <script src="js/bootstrap.min.js" ></script>
+
+    <script type="text/javascript">
+        
+        $("#btnCalculate").on("click", function(){
+            var hour_rate = $("#monthly_rate").val() / 25 / 8;
+            var work_hours = $("#number_of_days").val() * 8;
+            var diff_hours = 0;
+            var multiplier = 0;
+            
+            if($("#days_to_submit").val()){
+                diff_hours = ($("#number_of_days").val() - $("#days_to_submit").val()) * 8;
+                multiplier = $("#number_of_days").val() / $("#days_to_submit").val();
+                var cost = (work_hours+(diff_hours*multiplier))* hour_rate * $("#incentive_percentage").val()+"*";
+                $("#lblUrgentPrice").text('*Urgent Price');
+            }else{
+                var cost = work_hours * hour_rate * $("#incentive_percentage").val();
+                $("#lblUrgentPrice").text("");
+            }
+
+            $("#txtCost").text(cost);
+        });
+
+
+
+
+
+    </script>
+
+
+  </body>
+</html>
